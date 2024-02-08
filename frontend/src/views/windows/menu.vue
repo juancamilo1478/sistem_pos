@@ -29,7 +29,6 @@
     </div>
   </div>
 </template> 
- 
 <script >
   import inventarie from './inventarie/inventarie.vue';
   import datauser from './perfil/datauser.vue';

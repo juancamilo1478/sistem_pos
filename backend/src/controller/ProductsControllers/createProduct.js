@@ -5,12 +5,22 @@ const AWS = require('aws-sdk');
 const acces_aws= process.env.AWS_ACCESS_KEY;
 const region_aws = process.env.AWS_REGION;
 const secret_aws = process.env.AWS_SECRET_KEY;
-
+const { getiduser} =require('../../actions/getidusertoken')
 module.exports = async (req, res) => {
   const { description, name ,price,category,store} = req.body;
   const files = req.files; 
+  let token = false;
+  if (req.headers.authorization) {
+      token = req.headers.authorization.split(" ")[1];
+  }
   
   try {
+
+    const iduser =await getiduser(token);
+
+    if(!token){
+      throw new Error('error en token');
+    }
     if(files.length>6){
       throw new Error("maximo 6 imagenes por producto");
     }
@@ -20,8 +30,11 @@ module.exports = async (req, res) => {
     if(!description||!name||!price||!category||!store){
       throw new Error('faltan datos para crear un producto');
     }
+   
+
+
     const productSQL=await Products.create({
-      description,name,price,category,store,state:"active"
+      description,name,price,category,store,state:"active",userId:iduser
     });
     const s3 = new AWS.S3({
       signatureVersion: 'v4',
