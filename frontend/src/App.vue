@@ -17,5 +17,20 @@
   <!-- </header> -->
   <RouterView />
 </template>
+<script >
+ export default {
+
+ async mounted() {
+     const token = localStorage.getItem('token');
+    if (token !== null) {
+    const data  =await this.$store.dispatch("login", { });    
+ 
+    }
+  
+  },
+
+};
+
+</script>
 <style scoped>
 </style>

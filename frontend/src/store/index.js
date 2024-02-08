@@ -35,6 +35,21 @@ const store = createStore({
         throw new Error(error.message);
       }
     },
+    async login({ commit }, {password, gmail }) {
+      try {
+        const response = await axios.post("users/login", {
+          password: password,
+          gmail: gmail,
+        });
+        commit("login", response.data);
+        localStorage.setItem('token', response.data.token);
+        return response.data;  
+      } catch (error) {
+        commit("logout");
+        throw new Error(error.message);
+      }
+    
+    }
   },
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,

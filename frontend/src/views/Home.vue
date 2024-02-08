@@ -23,7 +23,7 @@
             </div>
           </div>
         </div>
-        <div v-if="login===false" class="col-lg-6"><button type="button" class="btn btn-light">Ingresar</button><router-link to="/register"><button type="button" class="btn btn-dark" style="border-radius: 10px;">Crear cuenta</button></router-link></div>
+        <div v-if="!login" class="col-lg-6"><button type="button" class="btn btn-light">Ingresar</button><router-link to="/register"><button type="button" class="btn btn-dark" style="border-radius: 10px;">Crear cuenta</button></router-link></div>
         <div v-else class="col-lg-6"><router-link to="/menu"><button type="button" class="btn btn-dark" style="border-radius: 10px;">Mi menu</button></router-link></div>
       </div>
     </div>
@@ -48,18 +48,20 @@
 <script >
 
   export default {
+    computed: {
+      user() {
+        return this.$store.getters.currentUser;
+      },
+      login() {
+        return this.$store.getters.isLoggedIn;
+      }
+    },
   data() {
     return {
-      user:null,
-      login:false
+ 
     };
   },
-  mounted() {
-   this.user= this.$store.getters.currentUser;
-   this.login= this.$store.getters.isLoggedIn;
-   console.log(this.user);
-   console.log(this.login);
-  },
+ 
   methods: {
     
     
