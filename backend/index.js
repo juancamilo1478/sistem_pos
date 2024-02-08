@@ -10,3 +10,4 @@ db.sync({alter:true}).then(() => {
   }).catch(error => {
     console.error('Error al sincronizar con la base de datos:', error);
   });
+  
