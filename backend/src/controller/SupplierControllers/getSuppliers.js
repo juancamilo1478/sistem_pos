@@ -1,7 +1,8 @@
-const { Products,Images } = require("../../db");
+const { Suppliers, Phones } = require("../../db");
 const { getiduser} =require('../../actions/getidusertoken');
+const { Op } = require('sequelize');
 module.exports = async (req, res) => {
-  const { name, category } = req.query;
+  const { name, city } = req.query;
 
   const pageNumber = parseInt(req.query.pageNumber) || 1; // Página por defecto es 1
   const pageSize = parseInt(req.query.pageSize) || 6; // NUMERO DE ELEMENTOS
@@ -16,29 +17,30 @@ module.exports = async (req, res) => {
     const iduser =await getiduser(token);
     let filters = {};
     if(iduser&&token){
-      filters.userId=iduser;
+      filters.userIdsuplier=iduser;
     }
     if (name) {
-      filters.name = name;
+        // Utiliza Op.like para buscar coincidencias parciales en el nombre
+        filters.name = { [Op.like]: `%${name}%` };
+      }
+    if (city) {
+      filters.city = city;
     }
-    if (category) {
-      filters.category = category;
-    }
-    const totalproducts = await Products.count({ where: filters });
-    const totalpages = Math.ceil(totalproducts / pageSize);
+    const totalSuppliers = await Suppliers.count({ where: filters });
+    const totalpages = Math.ceil(totalSuppliers / pageSize);
 
-    const searchProducts = await Products.findAll({ 
+    const searchSuppliers = await Suppliers.findAll({ 
       where: filters,
       offset: (pageNumber - 1) * pageSize,
       limit: pageSize,
       include: [{
-        model: Images,
-        as: 'Images' // Alias opcional para las imágenes asociadas a los productos
+        model: Phones,
+        as: 'Phones' // asociacion con celulares
     }]
     });
 
     res.status(200).json({
-      products: searchProducts,
+      data:  searchSuppliers,
       totalPages: totalpages,
       currentPage: pageNumber,
     });

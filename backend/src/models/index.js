@@ -1,9 +1,12 @@
 const users = require('./users');
 const productos =require('./Products');
 const images = require('./images');
+const suppliers =require('./Suppliers');
+const phones =require('./Phones');
 module.exports = {
   users,
   productos,
-  images
- 
+  images,
+  suppliers,
+  phones
   };

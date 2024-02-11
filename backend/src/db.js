@@ -20,14 +20,22 @@ for (const key in MODELS) {  //eslint-disable-line
 const {
   Users,
   Products,
-  Images 
+  Images ,
+  Suppliers,
+  Phones,
 } = sequelize.models;
 
 Users.hasMany(Products, { foreignKey: 'userId' });
 Products.belongsTo(Users, { as: 'Users', foreignKey: 'userId' });
 
+Users.hasMany(Suppliers, { foreignKey: 'userIdsuplier' });
+Suppliers.belongsTo(Users, { as: 'Users', foreignKey: 'userIdsuplier' });
+
 Products.hasMany(Images,{foreignKey:'productId'});
 Images.belongsTo(Products,{as:'Products',foreignKey:'productId'});
+
+Suppliers.hasMany(Phones,{foreignKey:'suppliersId'});
+Phones.belongsTo(Suppliers,{as:'Suppliers',foreignKey:'suppliersId'});
 
 module.exports = {
     ...sequelize.models,
