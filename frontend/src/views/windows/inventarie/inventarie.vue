@@ -260,14 +260,5 @@ export default {
 };
 </script>
 <style >
-.filtersmodel {
-  width: 200px;
-  border: solid black;
-  border-radius: 10px;
-  transform: translateX(-50%);
-  background: white;
-  position: absolute;
-  z-index: 2;
-  text-align: left;
-}
+
 </style>

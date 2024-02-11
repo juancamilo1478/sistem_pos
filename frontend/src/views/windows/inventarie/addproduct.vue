@@ -9,7 +9,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Crear nuevo producto</h5>
-          <button @click="()=>console.log(images)">mirar</button>
+    
         </div>
         <div class="modal-body">
           <div class="col-lg-12 row m-2">
