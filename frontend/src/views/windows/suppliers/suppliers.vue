@@ -57,17 +57,21 @@
 
             <div class="col-lg-12 row m-2">
               <h2 class="col-lg-3">categoria:</h2>
-              <select
+              <input
+                type="text"
                 v-model="filters.category"
-                class="form-select form-select-lg mb-3 col-9"
-              >
-                <option value="">null</option>
-                <option value="metal">metal</option>
-                <option value="pastico">plastico</option>
-                <option value="hogar">hogar</option>
-                <option value="madera">madera</option>
-                <option value="deportes">deportes</option>
-              </select>
+                class="form-control col-lg-9 text-right"
+              />
+               
+            </div>
+            <div class="col-lg-12 row m-2">
+              <h2 class="col-lg-3">ciudad:</h2>
+              <input
+                type="text"
+                v-model="filters.city"
+                class="form-control col-lg-9 text-right"
+              />
+               
             </div>
           </div>
           <div class="modal-footer">
@@ -142,6 +146,7 @@
       <td>{{ supplier.city }}</td>
       <td>{{ supplier.category }}</td>
       <td>{{ supplier.Phones[0].number }}</td>
+      <td> <router-link :to="'detailsuppliers/' + supplier.id"><i class="bi bi-eye m-2 cursorhover"  ></i></router-link><i class="bi bi-trash m-2 cursorhover"></i></td>
       <id></id>
     </tr>
   </tbody>
@@ -165,6 +170,7 @@ export default {
       filters: {
         name: "",
         category: "",
+        city:""
       },
       modalfilter: false,
     };
@@ -225,4 +231,7 @@ export default {
 };
 </script>
   <style >
+  .cursorhover{
+    cursor: pointer;
+  }
 </style>

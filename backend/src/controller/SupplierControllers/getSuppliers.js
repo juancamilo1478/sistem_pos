@@ -2,7 +2,7 @@ const { Suppliers, Phones } = require("../../db");
 const { getiduser} =require('../../actions/getidusertoken');
 const { Op } = require('sequelize');
 module.exports = async (req, res) => {
-  const { name, city } = req.query;
+  const { name, city,category } = req.query;
 
   const pageNumber = parseInt(req.query.pageNumber) || 1; // Página por defecto es 1
   const pageSize = parseInt(req.query.pageSize) || 6; // NUMERO DE ELEMENTOS
@@ -24,7 +24,12 @@ module.exports = async (req, res) => {
         filters.name = { [Op.like]: `%${name}%` };
       }
     if (city) {
-      filters.city = city;
+      filters.city = { [Op.like]: `%${city}%` };
+ 
+    }
+    if (category) {
+      filters.category = { [Op.like]: `%${category}%` };
+ 
     }
     const totalSuppliers = await Suppliers.count({ where: filters });
     const totalpages = Math.ceil(totalSuppliers / pageSize);
