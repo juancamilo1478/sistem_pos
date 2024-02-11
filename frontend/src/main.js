@@ -8,6 +8,10 @@ import store from './store/index'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './assets/variables.css';
+/* main.css */
+
+
+
 const app = createApp(App)
 
 app.use(router)

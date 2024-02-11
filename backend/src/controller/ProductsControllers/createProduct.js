@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
   }
   
   try {
-
+    
     const iduser =await getiduser(token);
 
     if(!token){

@@ -24,8 +24,8 @@ module.exports = (sequelize) => {
     },
 
     category:{
-      type:DataTypes.ENUM('medicamento','laxantes','preservativo,cosmeticos,otros') ,
-      defaultValue: 'medicamento',
+      type:DataTypes.ENUM('metal','pastico','hogar','madera','deportes') ,
+      defaultValue: 'metal',
       allowNull:false
       
     },
