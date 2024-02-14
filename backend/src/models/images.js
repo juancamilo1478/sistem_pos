@@ -5,8 +5,9 @@ module.exports = (sequelize) => {
   sequelize.define('Images',{
     id: {
       primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      
+      autoIncrement: true, // Para hacer que la columna id sea autoincrementable
+      type: DataTypes.INTEGER
     }, 
     url:{
         type:DataTypes.STRING,
