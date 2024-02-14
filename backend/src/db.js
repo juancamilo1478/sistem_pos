@@ -23,10 +23,14 @@ const {
   Images ,
   Suppliers,
   Phones,
+  Bills
 } = sequelize.models;
 
 Users.hasMany(Products, { foreignKey: 'userId' });
 Products.belongsTo(Users, { as: 'Users', foreignKey: 'userId' });
+
+Users.hasOne(Images);
+Images.belongsTo(Users);
 
 Users.hasMany(Suppliers, { foreignKey: 'userIdsuplier' });
 Suppliers.belongsTo(Users, { as: 'Users', foreignKey: 'userIdsuplier' });
@@ -37,6 +41,16 @@ Images.belongsTo(Products,{as:'Products',foreignKey:'productId'});
 Suppliers.hasMany(Phones,{foreignKey:'suppliersId'});
 Phones.belongsTo(Suppliers,{as:'Suppliers',foreignKey:'suppliersId'});
 
+Users.hasMany(Bills, { foreignKey: 'userId' });
+Bills.belongsTo(Users, { as: 'Users', foreignKey: 'userId' });
+
+Bills.belongsToMany(Products, { through: 'BillProducts', foreignKey: 'billId' });
+Products.belongsToMany(Bills, { through: 'BillProducts', foreignKey: 'productId' });
+const BillProducts = sequelize.define('BillProducts', {
+  quantity: Sequelize.INTEGER // Agregar un campo para la cantidad del producto en la factura
+});
+Bills.hasMany(BillProducts, { foreignKey: 'billId' });
+Products.hasMany(BillProducts, { foreignKey: 'productId' });
 module.exports = {
     ...sequelize.models,
     db: sequelize,

@@ -39,8 +39,16 @@ module.exports = async (req, res) => {
                         }
                     }
                 } else {
+                    const userdata=await Users.findOne({
+                        where:{
+                            id:decode.user.id
+                        }
+                    })
+                    if(!userdata){
+                       return res.status(400).json({msg:"error token"})
+                    }
                     return res.json({
-                        user: decode.user,
+                        user: userdata,
                         token: token
                     });
                 }
