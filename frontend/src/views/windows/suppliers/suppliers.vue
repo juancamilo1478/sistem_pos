@@ -55,15 +55,7 @@
               />
             </div>
 
-            <div class="col-lg-12 row m-2">
-              <h2 class="col-lg-3">categoria:</h2>
-              <input
-                type="text"
-                v-model="filters.category"
-                class="form-control col-lg-9 text-right"
-              />
-               
-            </div>
+           
             <div class="col-lg-12 row m-2">
               <h2 class="col-lg-3">ciudad:</h2>
               <input
@@ -135,7 +127,7 @@
           <tr>
             <th scope="col">nombre</th>
             <th scope="col">ciudad</th>
-            <th scope="col">categoria</th>
+            
             <th scope="col">telefono</th>
             <th scope="col">acciones</th>
           </tr>
@@ -144,7 +136,7 @@
     <tr v-for="supplier in suppliers" :key="supplier.id">
       <td scope="row">{{ supplier.name }}</td>
       <td>{{ supplier.city }}</td>
-      <td>{{ supplier.category }}</td>
+      
       <td>{{ supplier.Phones[0].number }}</td>
       <td> <router-link :to="'detailsuppliers/' + supplier.id"><i class="bi bi-eye m-2 cursorhover"  ></i></router-link><i class="bi bi-trash m-2 cursorhover"></i></td>
       <id></id>
@@ -169,7 +161,7 @@ export default {
       totalpage: 1,
       filters: {
         name: "",
-        category: "",
+       
         city:""
       },
       modalfilter: false,

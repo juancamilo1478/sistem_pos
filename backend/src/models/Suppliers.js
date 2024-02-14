@@ -19,11 +19,6 @@ module.exports = (sequelize) => {
           },
         }
     },
-    category:{
-        type:DataTypes.STRING,
-        allowNull:false,
-
-    },
 
     direction:{
       type:DataTypes.STRING, 

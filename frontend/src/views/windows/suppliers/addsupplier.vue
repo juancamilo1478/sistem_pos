@@ -28,14 +28,6 @@
             />
           </div>
           <div class="col-lg-12 row m-2">
-            <h2 class="col-lg-3">categoria:</h2>
-            <input
-              type="text"
-              v-model="newSupplier.category"
-              class="form-control col-lg-9 text-right"
-            />
-          </div>
-          <div class="col-lg-12 row m-2">
             <h2 class="col-lg-3">direccion:</h2>
             <input
               type="text"
@@ -115,7 +107,7 @@ export default {
       this.newSupplier = {
         name: "",
         store: 0,
-        category: "metal",
+        
         description: "",
         price: 0,
       };
@@ -125,7 +117,7 @@ export default {
       const sendData = {
         name: this.newSupplier.name,
         description: this.newSupplier.description,
-        category: this.newSupplier.category,
+       
         city: this.newSupplier.city,
         direction: this.newSupplier.direction,
         phone: this.newSupplier.phone,
@@ -150,7 +142,7 @@ export default {
       newSupplier: {
         name: "",
         description: "",
-        category: "",
+        
         city: "",
         direction: "",
         phone: [],
