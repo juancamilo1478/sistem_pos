@@ -38,7 +38,7 @@
     </div>
     <div style="width: 100%;">
         <actives v-if="modal==='actives'"/>
-        <createbill  v-if="modal==='newBill'" :funtion-prop="selectmodal"/>
+        <createbill v-if="modal === 'newBill'" :funtionProp="selectmodal" />
         <history  v-if="modal==='record'"/>
     </div>
   </div>

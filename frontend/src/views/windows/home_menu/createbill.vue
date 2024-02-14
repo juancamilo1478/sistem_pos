@@ -19,7 +19,8 @@ export default {
     
     data() {
       return {
-        modal: "actives",
+
+    
         username:''
       };
     },
@@ -29,9 +30,17 @@ export default {
         
       },
       async createbill(){
+        const self=this;
         if(this.username!==''){
           const response=await axios.post('bills/create',{clientname:this.username})
-          console.log(response.data);
+         if( response.status===200){
+          toast.success("creado correctamente", {
+            autoClose: 1000,
+          });
+          self.funtionProp("actives");
+         }
+         
+
         }
         else{
           toast.error("no tiene nombre de cliente", {

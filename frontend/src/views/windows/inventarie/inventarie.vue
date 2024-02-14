@@ -129,7 +129,7 @@
         </tr>
       </tbody>
     </table> -->
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example" v-if="products.length>0">
       <ul class="pagination">
         <li class="page-item" v-if="currentpage !== 1">
           <a class="page-link" href="#" @click="goToPage(currentpage - 1)"
