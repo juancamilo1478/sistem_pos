@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
                 } else {
                     const userdata=await Users.findOne({
                         where:{
-                            id:decode.user.id
+                            id:parseInt(decode.user.id) 
                         }
                     })
                     if(!userdata){

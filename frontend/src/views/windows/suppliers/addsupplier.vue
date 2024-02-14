@@ -74,7 +74,7 @@
             Cerrar
           </button>
           <button type="button" class="btn btn-primary" @click="saveProduct">
-            Crear producto
+            Crear provedor
           </button>
         </div>
       </div>

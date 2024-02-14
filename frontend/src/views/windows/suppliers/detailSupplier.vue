@@ -4,12 +4,13 @@
     style="width: 100%; max-height: 100vh; min-height: 100vh"
     v-if="supplier.length != {}"
   >
-  <router-link to="/menu"><div style="border: black; border-radius: 10px; cursor: pointer;"> <i class="bi bi-arrow-return-left"></i></div></router-link>
+    <router-link to="/menu"
+      ><div style="border: black; border-radius: 10px; cursor: pointer">
+        <i class="bi bi-arrow-return-left"></i></div
+    ></router-link>
     <div class="row">
       <div class="col-lg-6 mt-3">
         <h1 style="font-size: 2rem">{{ supplier.name }}</h1>
-
-       
 
         <div class="row">
           <div class="col-lg-6 row">
@@ -37,12 +38,16 @@
         </div>
 
         <div v-for="phone in supplier.Phones" :key="phone.id">
-            <div class="card mt-2">
-  <div class="card-body d-flex justify-content-between align-items-center">
-    <h5 class="card-title">{{ phone.number }}</h5>
-    <a :href="'tel:+' + phone.number" class="btn btn-primary">llamar</a>
-  </div>
-</div>
+          <div class="card mt-2">
+            <div
+              class="card-body d-flex justify-content-between align-items-center"
+            >
+              <h5 class="card-title">{{ phone.number }}</h5>
+              <a :href="'tel:+' + phone.number" class="btn btn-primary"
+                >llamar</a
+              >
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-lg-6 mt-3">
@@ -66,13 +71,11 @@ export default {
   },
   methods: {
     async loadsuppliers() {
- 
       const response = await axios.get(
         `suppliers/detail/${this.$route.params.id}`
       );
 
       this.supplier = response.data.data;
-    
     },
   },
   mounted() {

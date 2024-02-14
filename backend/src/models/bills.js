@@ -5,8 +5,11 @@ module.exports = (sequelize) => {
   sequelize.define('Bills',{
     id: {
       primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: DataTypes.INTEGER,
+      autoIncrement: true, // Para hacer que la columna id sea autoincrementable
+     
+      allowNull:false,
+
     }, 
     total:{
         type:DataTypes.DOUBLE,
