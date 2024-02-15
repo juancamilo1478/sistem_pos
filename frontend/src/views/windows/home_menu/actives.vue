@@ -1,8 +1,8 @@
 <template>
-     <div
+  <div
     style="width: 100%; min-height: 100vh; overflow-y: auto; max-height: 100vh"
   >
-    <div class="container-fluid" >
+    <div class="container-fluid">
       <div class="row">
         <div class="col-lg-3">
           <h1>cuentas</h1>
@@ -15,15 +15,11 @@
           >
             <i class="bi bi-funnel" style="margin: 5px"></i>filtros
           </button>
-           
         </div>
       </div>
     </div>
     <!-- modal agregar producto -->
 
-   
-
- 
     <!-- <paginate
       :page-count="pageCount"
       :click-handler="goToPage"
@@ -31,7 +27,7 @@
       :next-text="'Next'"
     /> -->
 
- <!-- paginade -->
+    <!-- paginade -->
     <nav aria-label="Page navigation example" v-if="bills.length">
       <ul class="pagination">
         <li class="page-item" v-if="currentpage !== 1">
@@ -55,8 +51,7 @@
         </li>
       </ul>
     </nav>
-<!-- ------ -->
-
+    <!-- ------ -->
 
     <div class="container">
       <!-- table suppliers -->
@@ -67,31 +62,31 @@
             <th scope="col">fecha</th>
             <th scope="col">estado</th>
             <th scope="col">acciones</th>
-            
           </tr>
         </thead>
-        <tbody> <!-- Corrección: Cambiar <tdbody> a <tbody> -->
-    <tr v-for="bill in bills" :key="bill.id">
-      <td scope="row">{{bill.clientname}}</td>
-      <td>{{formatDate(bill.createdAt)}}</td>
-      <td>{{ bill.state }}</td>
-    
-      <td> <router-link :to="'bill/' + bill.id"><i class="bi bi-eye m-2 cursorhover"  ></i></router-link><i class="bi bi-trash m-2 cursorhover"></i></td>
-      <id></id>
-    </tr>
-  </tbody>
-      </table>
+        <tbody>
+          <!-- Corrección: Cambiar <tdbody> a <tbody> -->
+          <tr v-for="bill in bills" :key="bill.id">
+            <td scope="row">{{ bill.clientname }}</td>
+            <td>{{ formatDate(bill.createdAt) }}</td>
+            <td>{{ bill.state }}</td>
 
-     
+            <td>
+              <router-link :to="'bill/' + bill.id"
+                ><i class="bi bi-eye m-2 cursorhover"></i></router-link
+              ><i class="bi bi-trash m-2 cursorhover"></i>
+            </td>
+            <id></id>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 <script>
-import axios from '../../../axiosInstance';
+import axios from "../../../axiosInstance";
 
 export default {
-   
-
   data() {
     return {
       bills: [],
@@ -101,14 +96,14 @@ export default {
   },
 
   methods: {
-    async loadBillsActive(){
+    async loadBillsActive() {
       let page = `pageNumber=${this.currentPage}&`;
       const response = await axios.get(`bills/actives?${page}`);
 
       this.bills = response.data.data;
       this.currentpage = response.data.currentPage;
       this.totalpage = response.data.totalPages;
-      console.log(this.bills)
+      console.log(this.bills);
     },
 
     selectmodal(modalselect) {
@@ -117,8 +112,8 @@ export default {
     formatDate(dateString) {
       const date = new Date(dateString);
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); 
-      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
     range(start, end) {
@@ -135,14 +130,11 @@ export default {
       this.loadBillsActive();
     },
   },
-  mounted(){
+  mounted() {
     this.loadBillsActive();
-    },
-    components: {
-    
   },
+  components: {},
 };
-
 </script>
 
 
