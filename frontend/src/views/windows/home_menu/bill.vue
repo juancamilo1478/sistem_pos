@@ -2,6 +2,7 @@
   <div
     style="width: 100%; min-height: 100vh; overflow-y: auto; max-height: 100vh"
   >
+  <router-link to="/menu"><i class="bi bi-box-arrow-left m-3" style="font-size: 2rem; cursor: pointer;"></i></router-link>
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-3">
@@ -58,6 +59,19 @@
         <th scope="col"></th>
         <th scope="col">Total:</th>
         <th scope="col">{{ getTotal(databill.Products) }}</th>
+      </tr>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Total:</th>
+        <th scope="col">   <button
+            type="button"
+            class="btn btn-primary"
+            @click="paybill"
+          >
+           pagar
+          </button></th>
       </tr>
     </table>
 
@@ -278,7 +292,9 @@ export default {
         toast.success(response.data.ms, {
           autoClose: 1000,
         });
-        this.idproductSelect;
+        this.loadbill();
+        this.idproductSelect=null;
+
       } else {
         toast.error("error al intentar agregar producto", {
           autoClose: 1000,
@@ -286,12 +302,13 @@ export default {
       }
     },
     closeSelectProduct() {
+  
       this.idproductSelect = null; // Cambia la variable idProduct a null
     },
     selectProduct(idProduct) {
       this.idproductSelect = idProduct;
       this.idproductSelect.quantity = 0;
-      console.log(this.idproductSelect);
+    
     },
     async createbill() {
       const self = this;
@@ -300,7 +317,8 @@ export default {
           toast.success("creado correctamente", {
             autoClose: 1000,
           });
-          self.funtionProp("actives");
+          const response = await axios.get("bills/billId/" + this.$route.params.id);
+          self.databill = response.data.data;
         }
       } else {
         toast.error("no tiene nombre de cliente", {
@@ -345,16 +363,24 @@ export default {
       }
 
       const response = await axios.get(`products/get?${page}${filter}`);
-      console.log(response.data);
+      
       this.products = response.data.products;
       this.currentPageproduct = response.data.currentPage;
       this.totalpageproduct = response.data.totalPages;
     },
+    async paybill(){
+      const response = await axios.get("bills/pay/" + this.$route.params.id);
+      console.log(response.data)
+    },
+    async loadbill(){
+      const response = await axios.get("bills/billId/" + this.$route.params.id);
+      this.databill = response.data.data;
+      console.log(response.data.data)
+    }
   },
   async mounted() {
-    const response = await axios.get("bills/billId/" + this.$route.params.id);
-    this.databill = response.data.data;
-    console.log(this.databill);
+   
+  this.loadbill();
   },
 };
 </script>
