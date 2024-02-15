@@ -3,6 +3,7 @@ const midalware = require("../midelwares/auth");
 
 const BillsController = require("express").Router();
         BillsController.get('/actives',getbillsactives)
+        BillsController.post('/addProduct',addProductBills)
         BillsController.get('/billId/:id',getbillid)
         BillsController.post("/create", midalware, createbills);
 

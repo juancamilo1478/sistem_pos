@@ -20,6 +20,47 @@
       </div>
     </div>
 
+    <table class="table" v-if="databill.id">
+      <thead>
+        <tr>
+          <th scope="col">Imagen</th>
+          <th scope="col">Producto</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Corrección: Cambiar <tdbody> a <tbody> -->
+        <tr v-for="product in databill.Products" :key="product.id">
+          <td scope="row">
+            <img
+              :src="product.Images[0].url"
+              :alt="product.id"
+              style="width: 60px; border-radius: 100%"
+            />
+          </td>
+          <td>{{ product.name }}</td>
+
+          <td>{{ product.BillProducts.quantity }}</td>
+          <td>{{ parseInt(product.price) }}</td>
+          <td>
+            {{
+              parseInt(product.BillProducts.quantity) * parseInt(product.price)
+            }}
+          </td>
+          <id></id>
+        </tr>
+      </tbody>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col">Total:</th>
+        <th scope="col">{{ getTotal(databill.Products) }}</th>
+      </tr>
+    </table>
+
     <!-- MODAL ADD PRODUCT -->
     <div
       class="modal"
@@ -27,7 +68,7 @@
       tabindex="-1"
       style="display: block; max-height: 80vh; overflow-y: auto"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog" v-if="idproductSelect === null">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Productos</h5>
@@ -51,47 +92,42 @@
                 buscar
               </button>
             </div>
-
-           
           </div>
-          <nav
-              aria-label="Page navigation example"
-              v-if="products.length > 0"
-            >
-              <ul class="pagination">
-                <li class="page-item" v-if="currentPageproduct !== 1">
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click="goToPage(currentPageproduct - 1)"
-                    >Previous</a
-                  >
-                </li>
-                <li
-                  class="page-item"
-                  v-for="pageNumber in range(
-                    currentPageproduct,
-                    totalpageproduct
-                  )"
-                  :key="pageNumber"
+          <nav aria-label="Page navigation example" v-if="products.length > 0">
+            <ul class="pagination">
+              <li class="page-item" v-if="currentPageproduct !== 1">
+                <a
+                  class="page-link"
+                  href="#"
+                  @click="goToPage(currentPageproduct - 1)"
+                  >Previous</a
                 >
-                  <a class="page-link" href="#" @click="goToPage(pageNumber)">{{
-                    pageNumber
-                  }}</a>
-                </li>
-                <li
-                  class="page-item"
-                  v-if="currentPageproduct !== totalpageproduct"
+              </li>
+              <li
+                class="page-item"
+                v-for="pageNumber in range(
+                  currentPageproduct,
+                  totalpageproduct
+                )"
+                :key="pageNumber"
+              >
+                <a class="page-link" href="#" @click="goToPage(pageNumber)">{{
+                  pageNumber
+                }}</a>
+              </li>
+              <li
+                class="page-item"
+                v-if="currentPageproduct !== totalpageproduct"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  @click="goToPage(currentPageproduct + 1)"
+                  >Next</a
                 >
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click="goToPage(currentPageproduct + 1)"
-                    >Next</a
-                  >
-                </li>
-              </ul>
-            </nav>
+              </li>
+            </ul>
+          </nav>
           <div class="modal-body">
             <!-- body modal  -->
             <div class="container">
@@ -122,6 +158,7 @@
                       <i
                         class="bi bi-plus-circle-fill"
                         style="font-size: 1.5rem; color: #007bff"
+                        @click="selectProduct(product)"
                       ></i>
                     </td>
                     <id></id>
@@ -136,12 +173,66 @@
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-              @click="modalfilterbutton"
+              @click="addmodalproduct"
             >
               Close
             </button>
             <button type="button" class="btn btn-primary" @click="filterdata">
               Filtrar
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- second modal select cantidad product-->
+
+      <div class="modal-dialog" v-if="idproductSelect != null">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ idproductSelect.name }}</h5>
+            <img
+              :src="idproductSelect.Images[0].url"
+              alt="Descripción de la imagen"
+              class="modal-close-image"
+              style="width: 80px; border-radius: 50%"
+            />
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <span
+                class="input-group-text mr-2"
+                id="basic-addon1"
+                style="
+                  background: rgb(23, 129, 174);
+                  border: transparent;
+                  color: white;
+                "
+                >Cantidad</span
+              >
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+                v-model="idproductSelect.quantity"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              @click="closeSelectProduct"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="addproductbill"
+            >
+              Agregar
             </button>
           </div>
         </div>
@@ -155,6 +246,7 @@ import { toast } from "vue3-toastify";
 export default {
   data() {
     return {
+      idproductSelect: null,
       modaladdproduct: false,
       databill: [],
       currentPageproduct: 1,
@@ -167,6 +259,40 @@ export default {
     };
   },
   methods: {
+    getTotal(date) {
+      const arraydata = date;
+      let total = 0;
+      for (var i = 0; i < arraydata.length; i++) {
+        total += arraydata[i].price * arraydata[i].BillProducts.quantity;
+      }
+      return total;
+    },
+    async addproductbill() {
+      const response = await axios.post("bills/addProduct", {
+        idProduct: this.idproductSelect.id,
+        idBills: this.$route.params.id,
+        quantity: this.idproductSelect.quantity,
+      });
+
+      if (response.status === 200) {
+        toast.success(response.data.ms, {
+          autoClose: 1000,
+        });
+        this.idproductSelect;
+      } else {
+        toast.error("error al intentar agregar producto", {
+          autoClose: 1000,
+        });
+      }
+    },
+    closeSelectProduct() {
+      this.idproductSelect = null; // Cambia la variable idProduct a null
+    },
+    selectProduct(idProduct) {
+      this.idproductSelect = idProduct;
+      this.idproductSelect.quantity = 0;
+      console.log(this.idproductSelect);
+    },
     async createbill() {
       const self = this;
       if (this.username !== "") {
@@ -199,13 +325,10 @@ export default {
     async addmodalproduct() {
       await this.resetmodal();
       await this.loadproducts();
+      this.idproductSelect = null;
       this.modaladdproduct = !this.modaladdproduct;
     },
     goToPage(pageNumber) {
-      // Lógica para cambiar de página...
-      // Por ejemplo, puedes emitir un evento para informar al componente padre sobre el cambio de página.
-      // this.$emit('page-changed', pageNumber);
-    
       this.currentPageproduct = pageNumber;
       this.loadproducts();
     },
@@ -231,7 +354,7 @@ export default {
   async mounted() {
     const response = await axios.get("bills/billId/" + this.$route.params.id);
     this.databill = response.data.data;
-    console.log(response);
+    console.log(this.databill);
   },
 };
 </script>

@@ -1,4 +1,4 @@
-const { Bills, Products} = require("../../db");
+const { Bills, Products,Images} = require("../../db");
 const { getiduser } = require("../../actions/getidusertoken");
 
 module.exports = async (req, res) => {
@@ -21,8 +21,14 @@ module.exports = async (req, res) => {
       },
       include: [
         {
-          model: Products,
-          through: { attributes: ['quantity'] } // Para incluir la cantidad desde la tabla intermedia BillProducts
+          model: Products ,
+          through: { attributes: ['quantity'] }  ,
+          include: [
+            {
+              model: Images,
+              attributes: ['url'] // Aquí puedes especificar los atributos que deseas incluir de la tabla Images
+            }
+          ],
         }
       ]
     });
