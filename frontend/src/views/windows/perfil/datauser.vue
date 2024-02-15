@@ -15,7 +15,8 @@ export default {
   methods: {
    async loaduser(){
     const response = await axios.get('users/data')
-    console.log(response.data)
+    this.userdata=response.data.data
+ 
     }
   },
   async mounted() {

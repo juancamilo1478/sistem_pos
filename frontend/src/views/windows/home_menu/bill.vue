@@ -191,9 +191,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary" @click="filterdata">
-              Filtrar
-            </button>
+           
           </div>
         </div>
       </div>
