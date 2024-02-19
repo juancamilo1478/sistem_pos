@@ -28,6 +28,7 @@ module.exports = async (req, res) => {
         userId: iduser,
         state: "open",
       },
+      
       offset: (pageNumber - 1) * pageSize,
       limit: pageSize,
     });

@@ -47,7 +47,7 @@ Bills.belongsTo(Users, { as: 'Users', foreignKey: 'userId' });
 Bills.belongsToMany(Products, { through: 'BillProducts', foreignKey: 'billId' });
 Products.belongsToMany(Bills, { through: 'BillProducts', foreignKey: 'productId' });
 const BillProducts = sequelize.define('BillProducts', {
-  quantity: Sequelize.INTEGER // Agregar un campo para la cantidad del producto en la factura
+  quantity: DataTypes.INTEGER// Agregar un campo para la cantidad del producto en la factura
 });
 Bills.hasMany(BillProducts, { foreignKey: 'billId' });
 Products.hasMany(BillProducts, { foreignKey: 'productId' });

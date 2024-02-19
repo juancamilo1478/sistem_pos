@@ -10,7 +10,7 @@
         style="border-bottom: solid 3px rgb(183, 181, 181)"
       >
         <div
-          class="col-lg-4 section text-center"
+          class="col-lg-4 section"
           @click="selectmodal('actives')"
           :style="{
             borderBottom: modal === 'actives' ? 'solid 3px black' : '',
@@ -19,7 +19,7 @@
           Activas
         </div>
         <div
-          class="col-lg-4 section text-center"
+          class="col-lg-4 section"
           @click="selectmodal('record')"
           :style="{ borderBottom: modal === 'record' ? 'solid 3px black' : '' }"
         >

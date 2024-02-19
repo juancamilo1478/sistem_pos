@@ -1,5 +1,5 @@
  
-const {  Bills ,Products} = require('../../db');
+const {  Bills ,Products,BillProducts} = require('../../db');
  
  
 const { getiduser} =require('../../actions/getidusertoken')
@@ -9,27 +9,36 @@ module.exports = async (req, res) => {
   if (req.headers.authorization) {
       token = req.headers.authorization.split(" ")[1];
   }
-  
+  console.log(quantity)
   try {
-    if(!idProduct||!idBills||quantity){
+    if(!idProduct||!idBills||!quantity){
         throw new Error('faltan datos');
     }
     const iduser =await getiduser(token);
     if(!token){
       throw new Error('error en token');
     }
-    const findProduct = await Products.findByPk(idProduct);
-    const findBill = await Bills.findByPk(idBills);
-    if (!findProduct || !findBill) {
+    const product = await Products.findByPk(idProduct);
+    const bill = await Bills.findByPk(idBills);
+    if (!product || !bill) {
         throw new Error('Producto o factura no encontrado');
       }
-      await findBill.addProduct(findProduct, {
-        through: {
-          quantity: quantity
+      const existingRelation = await BillProducts.findOne({
+        where: {
+          billId: idBills,
+          productId: idProduct
         }
       });
-
-
+      if(!existingRelation){
+      await BillProducts.create({
+        billId: bill.id,
+        productId: product.id,
+        quantity: parseInt(quantity)
+      });
+    }else{
+      existingRelation.quantity +=parseInt(quantity)
+      await existingRelation.save();
+    }
     res.status(200).json({ ms: "producto asociado correctamente"
     
      }); // `Location` contiene la URL del objeto en S3.

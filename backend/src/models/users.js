@@ -39,13 +39,9 @@ module.exports = (sequelize) => {
     },
     gmail: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique:true,
-      validate:{
-        isEmail:{
-          msg:"debe ser un correo electronico valido"
-        }
-      }
+      
+      
+      
     },
     photo:{
       type:DataTypes.STRING,

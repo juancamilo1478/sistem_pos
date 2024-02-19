@@ -55,7 +55,6 @@
               />
             </div>
 
-           
             <div class="col-lg-12 row m-2">
               <h2 class="col-lg-3">ciudad:</h2>
               <input
@@ -63,7 +62,6 @@
                 v-model="filters.city"
                 class="form-control col-lg-9 text-right"
               />
-               
             </div>
           </div>
           <div class="modal-footer">
@@ -95,8 +93,7 @@
       :next-text="'Next'"
     />
 
- 
-    <nav aria-label="Page navigation example" v-if="suppliers.length>0">
+    <nav aria-label="Page navigation example" v-if="suppliers.length > 0">
       <ul class="pagination">
         <li class="page-item" v-if="currentpage !== 1">
           <a class="page-link" href="#" @click="goToPage(currentpage - 1)"
@@ -127,24 +124,27 @@
           <tr>
             <th scope="col">nombre</th>
             <th scope="col">ciudad</th>
-            
+
             <th scope="col">telefono</th>
             <th scope="col">acciones</th>
           </tr>
         </thead>
-        <tbody> <!-- Corrección: Cambiar <tdbody> a <tbody> -->
-    <tr v-for="supplier in suppliers" :key="supplier.id">
-      <td scope="row">{{ supplier.name }}</td>
-      <td>{{ supplier.city }}</td>
-      
-      <td>{{ supplier.Phones[0].number }}</td>
-      <td> <router-link :to="'detailsuppliers/' + supplier.id"><i class="bi bi-eye m-2 cursorhover"  ></i></router-link><i class="bi bi-trash m-2 cursorhover"></i></td>
-      <id></id>
-    </tr>
-  </tbody>
-      </table>
+        <tbody>
+          <!-- Corrección: Cambiar <tdbody> a <tbody> -->
+          <tr v-for="supplier in suppliers" :key="supplier.id">
+            <td scope="row">{{ supplier.name }}</td>
+            <td>{{ supplier.city }}</td>
 
-     
+            <td>{{ supplier.Phones[0].number }}</td>
+            <td>
+              <router-link :to="'detailsuppliers/' + supplier.id"
+                ><i class="bi bi-eye m-2 cursorhover"></i></router-link
+              ><i class="bi bi-trash m-2 cursorhover"></i>
+            </td>
+            <id></id>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -161,8 +161,8 @@ export default {
       totalpage: 1,
       filters: {
         name: "",
-       
-        city:""
+
+        city: "",
       },
       modalfilter: false,
     };
@@ -223,7 +223,7 @@ export default {
 };
 </script>
   <style >
-  .cursorhover{
-    cursor: pointer;
-  }
+.cursorhover {
+  cursor: pointer;
+}
 </style>
