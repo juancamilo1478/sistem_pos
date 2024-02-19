@@ -1,7 +1,7 @@
 <template>
     <div class="mt-3">
-      <h1>nombre cliente:</h1>
-   <input class="form-control form-control-lg" type="text" placeholder="nombre del cliente" aria-label=".form-control-lg example" v-model="username">
+      <h1>Nombre cliente:</h1>
+   <input class="form-control form-control-lg" type="text" placeholder="Nombre del cliente" aria-label=".form-control-lg example" v-model="username">
    <button type="button" class="btn btn-primary mt-3" @click="createbill">Crear</button>
 </div>
 </template>
@@ -34,7 +34,7 @@ export default {
         if(this.username!==''){
           const response=await axios.post('bills/create',{clientname:this.username})
          if( response.status===200){
-          toast.success("creado correctamente", {
+          toast.success("Creado Correctamente", {
             autoClose: 1000,
           });
           self.funtionProp("actives");

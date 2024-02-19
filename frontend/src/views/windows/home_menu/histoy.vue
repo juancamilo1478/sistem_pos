@@ -1,3 +1,3 @@
 <template>
-    <h1>histoy</h1>
+    <h1>History</h1>
 </template>

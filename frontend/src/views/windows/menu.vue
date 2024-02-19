@@ -18,6 +18,10 @@
           <i class="bi bi-person-circle icon" ></i>
           <h1>Perfil</h1>
         </div>
+        <button type="button" class="btn btn-primary col-lg-12"
+        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color: rgb(207, 18, 18);">
+  Salir 
+</button>
       </div>
       <div class="col-lg-10" style="background: #ffffff">
       <!-- this section is options -->  
@@ -28,18 +32,27 @@
       </div>
     </div>
   </div>
+  <div>
+    
+  
+</div>
 </template> 
 <script >
   import inventarie from './inventarie/inventarie.vue';
   import datauser from './perfil/datauser.vue';
   import suppliers from './suppliers/suppliers.vue';
   import homemenu from './home_menu/homemenu.vue';
+  
+  
+  
   export default{
     components: {
       inventarie,
       datauser,
       suppliers,
-      homemenu
+      homemenu,
+      
+      
   },
   data() {
     return {
@@ -71,5 +84,5 @@
 }
 </style>
 
-
+//// agregar modal, agregar script /////////
 
