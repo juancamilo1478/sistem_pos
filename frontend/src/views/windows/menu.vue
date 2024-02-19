@@ -18,10 +18,10 @@
           <i class="bi bi-person-circle icon" ></i>
           <h1>Perfil</h1>
         </div>
-        <button type="button" class="btn btn-primary col-lg-12"
+        <button type="button" @click="close" class="btn btn-primary col-lg-12"
         style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color: rgb(207, 18, 18);">
-  Salir 
-</button>
+          Salir 
+        </button>
       </div>
       <div class="col-lg-10" style="background: #ffffff">
       <!-- this section is options -->  
@@ -62,6 +62,10 @@
   methods: {
     selectOption(value){
       this.option=value;
+    },
+    close() {
+      this.$store.dispatch("close",{})   
+    this.$router.push({path:`/`});
     }
   },
 };

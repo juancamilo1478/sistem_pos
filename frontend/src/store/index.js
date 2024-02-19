@@ -18,6 +18,11 @@ const store = createStore({
       state.currentUser = null;
       state.token = null;
     },
+    close(state){
+      state.isLoggedIn = false;
+      state.currentUser =  null;
+      state.token = null;
+    }
   },
   actions: {
     async register({ commit }, { name, password, gmail }) {
@@ -49,8 +54,13 @@ const store = createStore({
         throw new Error(error.message);
       }
     
-    }
+    },
+    async close({commit})
+    {commit("close")
+  localStorage.removeItem( 'token' )}
   },
+  
+  
   getters: {
     isLoggedIn: (state) => state.isLoggedIn,
     currentUser: (state) => state.currentUser,

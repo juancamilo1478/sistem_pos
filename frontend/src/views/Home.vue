@@ -2,6 +2,58 @@
 
 <template>
   <!-- nav bar -->
+  
+  
+  <div
+      class="modal"
+       v-if="modalLogin"
+      tabindex="-1"
+      style="display: block; max-height: 80vh; overflow-y: auto"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Login</h5>
+           
+          </div>
+          <div class="modal-body">
+            <div class="col-lg-12 row m-2">
+              <h2 class="col-lg-3">Correo:</h2>
+              <input v-model="gmail"
+                type="text"
+              
+                class="form-control col-lg-9 text-right"
+              />
+            </div>
+
+            <div class="col-lg-12 row m-2">
+              <h2 class="col-lg-3">Password:</h2>
+              <input v-model="contraseña"
+                type="text"
+               
+                class="form-control col-lg-9 text-right"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button @click="openmodalLogin"
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" @click="Logear"  >
+              Entrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
   <div>
     <div class="container-fluid mt-5">
       <div class="row g-0 text-center">
@@ -23,7 +75,7 @@
             </div>
           </div>
         </div>
-        <div v-if="!login" class="col-lg-6"><button type="button" class="btn btn-light">Ingresar</button><router-link to="/register"><button type="button" class="btn btn-dark" style="border-radius: 10px;">Crear cuenta</button></router-link></div>
+        <div v-if="!login" class="col-lg-6"><button type="button" @click="openmodalLogin" class="btn btn-light">Ingresar</button><router-link to="/register"><button type="button" class="btn btn-dark" style="border-radius: 10px;">Crear cuenta</button></router-link></div>
         <div v-else class="col-lg-6"><router-link to="/menu"><button type="button" class="btn btn-dark" style="border-radius: 10px;">Mi menu</button></router-link></div>
       </div>
     </div>
@@ -55,16 +107,23 @@
       login() {
         return this.$store.getters.isLoggedIn;
       }
+
     },
   data() {
-    return {
+    return { modalLogin:false,
+      gmail:"",
+      contraseña:""
  
     };
   },
  
   methods: {
-    
-    
+    openmodalLogin(){
+      this.modalLogin=!this.modalLogin;
+    },
+    async Logear(){ 
+      await this.$store.dispatch('login', { gmail: this.gmail, contraseña: this.contraseña })
+    } 
   },
 };
  
