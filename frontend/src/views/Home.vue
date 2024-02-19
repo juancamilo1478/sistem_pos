@@ -2,8 +2,18 @@
 
 <template>
   <!-- nav bar -->
+  
+
+
   <div>
+    
     <div class="container-fluid mt-5">
+
+
+      
+
+
+
       <div class="row g-0 text-center">
         <div class="col-lg-6">
           <div class="row">
