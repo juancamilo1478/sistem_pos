@@ -3,6 +3,7 @@
     class="container"
     style="width: 100%; min-height: 100vh; overflow-y: auto; max-height: 100vh"
   >
+
     <div class="row">
       <div
         class="col-lg-12 row"
@@ -25,7 +26,7 @@
           Historial
         </div>
         <div
-          class="col-lg-4 section"
+          class="col-lg-4 section text-center"
           style=""
           @click="selectmodal('newBill')"
           :style="{

@@ -31,7 +31,8 @@ const router = createRouter({
       path: '/bill/:id', // Aquí definimos un parámetro ':id'
       name: 'billdetail',
       component: bill
-    }
+    },
+    
     
   ]
 })
