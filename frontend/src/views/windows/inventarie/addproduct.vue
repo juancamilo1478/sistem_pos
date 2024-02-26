@@ -21,7 +21,7 @@
             />
           </div>
           <div class="col-lg-12 row m-2">
-            <h2 class="col-lg-3">bodega:</h2>
+            <h2 class="col-lg-3">Stock:</h2>
             <input
               type="number"
               v-model="newProduct.store"
@@ -29,20 +29,20 @@
             />
           </div>
           <div class="col-lg-12 row m-2">
-            <h2 class="col-lg-3">categoria:</h2>
+            <h2 class="col-lg-3">Categoria:</h2>
             <select
               v-model="newProduct.category"
               class="form-select form-select-lg mb-3 col-9"
             >
-              <option value="metal">metal</option>
-              <option value="pastico">plastico</option>
-              <option value="hogar">hogar</option>
-              <option value="madera">madera</option>
-              <option value="deportes">deportes</option>
+              <option value="metal">Metal</option>
+              <option value="pastico">Plastico</option>
+              <option value="hogar">Hogar</option>
+              <option value="madera">Madera</option>
+              <option value="deportes">Deportes</option>
             </select>
           </div>
           <div class="col-lg-12 row m-2">
-            <h2 class="col-lg-3">descripcion:</h2>
+            <h2 class="col-lg-3">Descripcion:</h2>
             <input
               type="text"
               v-model="newProduct.description"
@@ -50,7 +50,7 @@
             />
           </div>
           <div class="col-lg-12 row m-2">
-            <h2 class="col-lg-3">precio:</h2>
+            <h2 class="col-lg-3">Precio:</h2>
             <input
               type="number"
               v-model="newProduct.price"

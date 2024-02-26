@@ -87,6 +87,53 @@
       </div>
     </div>
 
+
+    <div v-if="modaledit" class="modal"
+       
+      tabindex="-1"
+      style="display: block; max-height: 80vh; overflow-y: auto"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modificar Stock</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="col-lg-12 row m-2">
+              <h2 class="col-lg-3">Cantidad:</h2>
+              <input
+                type="text"
+              
+                class="form-control col-lg-9 text-right"
+              />
+            </div>
+
+            
+          </div>
+          <div class="modal-footer">
+            <button @click="closemodal"
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            
+            >
+              Cerrar
+            </button>
+            <button type="button" class="btn btn-primary"  >
+              Editar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <modalAddproduct
       @cerrar="addproductmodal"
       v-if="addproduct"
@@ -99,36 +146,6 @@
       :next-text="'Next'"
     />
 
-    <!-- table products -->
-    <!-- <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">nombre</th>
-          <th scope="col">categoria</th>
-          <th scope="col">Inventario</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table> -->
     <nav aria-label="Page navigation example" v-if="products.length>0">
       <ul class="pagination">
         <li class="page-item" v-if="currentpage !== 1">
@@ -178,6 +195,7 @@
                     <td>{{ product.category }}</td>
                     <td>{{ product.store }}</td>
                   </tr>
+                  <button type="button" @click="Edit(product.id)" class="btn btn-primary">Editar</button>
                 </tbody>
               </table>
             </div>
@@ -198,6 +216,8 @@ export default {
       products: [],
       currentpage: 1,
       totalpage: 1,
+      modaledit:false,
+      selectedProduct: null,
       filters: {
         name: "",
         category: "",
@@ -216,6 +236,8 @@ export default {
       this.currentPage = 1;
       this.loadproducts();
     },
+    closemodal(){this.modaledit=false, this.selectedProduct=null},
+    Edit(id){this.selectedProduct=id,this.modaledit=true},
     goToPage(pageNumber) {
       // Lógica para cambiar de página...
       // Por ejemplo, puedes emitir un evento para informar al componente padre sobre el cambio de página.
