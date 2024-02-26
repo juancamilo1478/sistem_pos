@@ -19,6 +19,9 @@ module.exports = async (req, res) => {
       throw new Error('error en token');
     }
     const product = await Products.findByPk(idProduct);
+    if(product.store<quantity){
+      throw new Error("cantidad en store insuficiente")
+    }
     const bill = await Bills.findByPk(idBills);
     if (!product || !bill) {
         throw new Error('Producto o factura no encontrado');
@@ -35,6 +38,8 @@ module.exports = async (req, res) => {
         productId: product.id,
         quantity: parseInt(quantity)
       });
+      product.store=product.store-quantity;
+      await product.save();
     }else{
       existingRelation.quantity +=parseInt(quantity)
       await existingRelation.save();
