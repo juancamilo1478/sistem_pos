@@ -74,7 +74,7 @@
             <td>
               <router-link :to="'bill/' + bill.id"
                 ><i class="bi bi-eye m-2 cursorhover"></i></router-link
-              ><i class="bi bi-trash m-2 cursorhover"></i>
+              ><i class="bi bi-trash m-2 cursorhover" @click="destroy(bill.id)"></i>
             </td>
             <id></id>
           </tr>
@@ -96,6 +96,12 @@ export default {
   },
 
   methods: {
+   async destroy(id){
+      const response = await axios.delete(`bills/destroy/${id}`);
+      console.log(response)
+      this.loadBillsActive()
+    },
+
     async loadBillsActive() {
       let page = `pageNumber=${this.currentPage}&`;
       const response = await axios.get(`bills/actives?${page}`);
@@ -103,7 +109,7 @@ export default {
       this.bills = response.data.data;
       this.currentpage = response.data.currentPage;
       this.totalpage = response.data.totalPages;
-      console.log(this.bills);
+    
     },
 
     selectmodal(modalselect) {

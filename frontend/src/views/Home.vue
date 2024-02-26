@@ -98,7 +98,7 @@
   </div>
 </template>
 <script >
-
+import { toast } from "vue3-toastify"; 
   export default {
     computed: {
       user() {
@@ -124,7 +124,9 @@
     async Logear(){ 
     const response=  await this.$store.dispatch('login', { gmail: this.gmail, contraseña: this.contraseña })
     const state = response && response.token ? true : false;
-    console.log(state)
+    if(state===true){
+      this.openmodalLogin()
+    }
     } 
   },
 };

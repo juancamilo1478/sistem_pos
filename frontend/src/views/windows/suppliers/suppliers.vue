@@ -139,7 +139,8 @@
             <td>
               <router-link :to="'detailsuppliers/' + supplier.id"
                 ><i class="bi bi-eye m-2 cursorhover"></i></router-link
-              ><i class="bi bi-trash m-2 cursorhover"></i>
+              >
+              <i class="bi bi-trash m-2 cursorhover" @click="destroy(supplier.id)"></i>
             </td>
             <id></id>
           </tr>
@@ -168,6 +169,11 @@ export default {
     };
   },
   methods: {
+    async destroy(id){
+      const response = await axios.delete(`suppliers/delete/${id}`);
+    
+      this.loadsuppliers()
+    },
     range(start, end) {
       return Array.from(
         { length: end - start + 1 },
