@@ -87,9 +87,9 @@
       </div>
     </div>
 
-
-    <div v-if="modaledit" class="modal"
-       
+    <div
+      v-if="modaledit"
+      class="modal"
       tabindex="-1"
       style="display: block; max-height: 80vh; overflow-y: auto"
     >
@@ -107,32 +107,23 @@
           <div class="modal-body">
             <div class="col-lg-12 row m-2">
               <h2 class="col-lg-3">Cantidad:</h2>
-              <input
-                type="text"
-              
-                class="form-control col-lg-9 text-right"
-              />
+              <input  v-model="selectedProduct.store"   type="number" class="form-control col-lg-9 text-right" />
             </div>
-
-            
           </div>
           <div class="modal-footer">
-            <button @click="closemodal"
+            <button
+              @click="closemodal"
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
-            
             >
               Cerrar
             </button>
-            <button type="button" class="btn btn-primary"  >
-              Editar
-            </button>
+            <button type="button" class="btn btn-primary" @click="funtionEditProduct">Editar</button>
           </div>
         </div>
       </div>
     </div>
-
 
     <modalAddproduct
       @cerrar="addproductmodal"
@@ -146,7 +137,7 @@
       :next-text="'Next'"
     />
 
-    <nav aria-label="Page navigation example" v-if="products.length>0">
+    <nav aria-label="Page navigation example" v-if="products.length > 0">
       <ul class="pagination">
         <li class="page-item" v-if="currentpage !== 1">
           <a class="page-link" href="#" @click="goToPage(currentpage - 1)"
@@ -195,7 +186,13 @@
                     <td>{{ product.category }}</td>
                     <td>{{ product.store }}</td>
                   </tr>
-                  <button type="button" @click="Edit(product.id)" class="btn btn-primary">Editar</button>
+                  <button
+                    type="button"
+                    @click="Edit(product)"
+                    class="btn btn-primary"
+                  >
+                    Editar
+                  </button>
                 </tbody>
               </table>
             </div>
@@ -208,7 +205,7 @@
 <script >
 import modalAddproduct from "./addproduct.vue";
 import axios from "../../../axiosInstance";
-
+import { toast } from "vue3-toastify";
 export default {
   data() {
     return {
@@ -216,7 +213,7 @@ export default {
       products: [],
       currentpage: 1,
       totalpage: 1,
-      modaledit:false,
+      modaledit: false,
       selectedProduct: null,
       filters: {
         name: "",
@@ -236,14 +233,39 @@ export default {
       this.currentPage = 1;
       this.loadproducts();
     },
-    closemodal(){this.modaledit=false, this.selectedProduct=null},
-    Edit(id){this.selectedProduct=id,this.modaledit=true},
+    closemodal() {
+      this.modaledit = false;
+      this.selectedProduct = null;
+      this.loadproducts()
+    },
+    Edit(product) {
+      this.selectedProduct = product
+      this.modaledit = true;
+      console.log(this.selectedProduct)
+    },
     goToPage(pageNumber) {
       // Lógica para cambiar de página...
       // Por ejemplo, puedes emitir un evento para informar al componente padre sobre el cambio de página.
       // this.$emit('page-changed', pageNumber);
       this.currentPage = pageNumber;
       this.loadproducts();
+    },
+    async funtionEditProduct() {
+      const self=this;
+      if(this.selectedProduct){
+        const response = await axios.put(`products/editstock`,{id:this.selectedProduct.id,store:this.selectedProduct.store});
+        if(response.status===200){
+          toast.success("producto modificado", {
+          autoClose: 1000,
+        });
+        self.closemodal();
+        }else{
+          toast.error("Error al modificar producto", {
+          autoClose: 1000,
+        });
+        }
+      }
+     
     },
 
     modalfilterbutton() {
@@ -257,7 +279,7 @@ export default {
     },
     async loadproducts() {
       let filter = "";
-    
+
       let page = `pageNumber=${this.currentPage}&`;
       if (typeof this.filters === "object") {
         for (const key in this.filters) {
@@ -266,7 +288,7 @@ export default {
           }
         }
       }
-  
+
       const response = await axios.get(`products/get?${page}${filter}`);
       this.products = response.data.products;
       this.currentpage = response.data.currentPage;
@@ -282,5 +304,4 @@ export default {
 };
 </script>
 <style >
-
 </style>

@@ -105,7 +105,7 @@ import { toast } from "vue3-toastify";
         return this.$store.getters.currentUser;
       },
       login() {
-        return this.$store.getters.isLoggedIn;
+        return this.$store.getters.isLoggedIn ;
       }
 
     },
@@ -122,10 +122,12 @@ import { toast } from "vue3-toastify";
       this.modalLogin=!this.modalLogin;
     },
     async Logear(){ 
-    const response=  await this.$store.dispatch('login', { gmail: this.gmail, contraseña: this.contraseña })
+    const response=  await this.$store.dispatch('login', { gmail: this.gmail, password: this.contraseña })
     const state = response && response.token ? true : false;
     if(state===true){
-      this.openmodalLogin()
+      // this.openmodalLogin()
+      window.location.reload();
+
     }
     } 
   },

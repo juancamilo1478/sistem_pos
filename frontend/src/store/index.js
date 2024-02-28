@@ -42,6 +42,7 @@ const store = createStore({
     },
     async login({ commit }, {password, gmail }) {
       try {
+        console.log(password)
         const response = await axios.post("users/login", {
           password: password,
           gmail: gmail,

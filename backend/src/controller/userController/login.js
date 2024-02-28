@@ -57,4 +57,41 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: 'error al iniciar' });
         }
     }
+    else{
+        try {
+            // Buscar usuario por correo electrónico
+            const userGmail = await Users.findOne({ where: { gmail } });
+            
+            if (!userGmail) {
+                // Si no se encuentra el usuario, devolver un mensaje de error con el código de estado 404
+                return res.status(404).json({ error: 'Usuario no encontrado' });
+            }
+    
+            // Comparar la contraseña proporcionada con la contraseña almacenada usando bcrypt.compare
+            bcrypt.compare(password, userGmail.password, (err, result) => {
+                if (err) {
+                    // Manejar el error de comparación de contraseñas
+                    console.error('Error al comparar contraseñas:', err);
+                    return res.status(500).json({ error: 'Error interno del servidor' });
+                }
+    
+                if (result) {
+                    // Si las contraseñas coinciden, generar un token
+                    const token = jwt.sign({ user: userGmail }, authConfig.secret, {
+                        expiresIn: authConfig.expires
+                    });
+                    // Enviar respuesta con el usuario y el token
+                    return res.status(200).json({ user: userGmail, token });
+                } else {
+                    // Si las contraseñas no coinciden, devolver un mensaje de error con el código de estado 400
+                    return res.status(400).json({ error: 'Contraseña incorrecta' });
+                }
+            });
+        } catch (error) {
+            // Manejar cualquier otro error que ocurra
+            console.error('Error al buscar usuario:', error);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+
+    }
 }
