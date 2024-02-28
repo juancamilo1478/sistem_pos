@@ -52,7 +52,7 @@ const store = createStore({
         return response.data;  
       } catch (error) {
         commit("logout");
-        throw new Error(error.message);
+        return false
       }
     
     },

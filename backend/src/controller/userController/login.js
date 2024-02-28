@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     if (req.headers.authorization) {
         token = req.headers.authorization.split(" ")[1];
     }
-    if (token) {
+    if (token&&!password,!gmail) {
         // Comprobar validez de token
         try {
             jwt.verify(token, authConfig.secret, async (err, decode) => {

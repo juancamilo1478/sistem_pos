@@ -123,11 +123,19 @@ import { toast } from "vue3-toastify";
     },
     async Logear(){ 
     const response=  await this.$store.dispatch('login', { gmail: this.gmail, password: this.contraseña })
+    console.log(response)
     const state = response && response.token ? true : false;
     if(state===true){
       // this.openmodalLogin()
       window.location.reload();
 
+    }
+    else{
+      toast.error("error al iniciar sesion",{
+   
+          autoClose: 1000,
+  
+      });
     }
     } 
   },
