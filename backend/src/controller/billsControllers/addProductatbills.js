@@ -38,10 +38,17 @@ module.exports = async (req, res) => {
         productId: product.id,
         quantity: parseInt(quantity)
       });
-      product.store=product.store-quantity;
+      product.store -= parseInt(quantity);
+
+      
       await product.save();
+    
     }else{
       existingRelation.quantity +=parseInt(quantity)
+      product.store -= parseInt(quantity);
+
+      
+      await product.save();
       await existingRelation.save();
     }
     res.status(200).json({ ms: "producto asociado correctamente"

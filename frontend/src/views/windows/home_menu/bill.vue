@@ -280,7 +280,8 @@ export default {
       return total;
     },
     async addproductbill() {
-      const response = await axios.post("bills/addProduct", {
+      try {
+        const response = await axios.post("bills/addProduct", {
         idProduct: this.idproductSelect.id,
         idBills: this.$route.params.id,
         quantity: this.idproductSelect.quantity,
@@ -290,14 +291,18 @@ export default {
         toast.success(response.data.ms, {
           autoClose: 1000,
         });
+        this.loadproducts();
         this.loadbill();
         this.idproductSelect=null;
 
-      } else {
-        toast.error("error al intentar agregar producto", {
+      }
+      } catch (error) {
+      const messague=error?.response?.data?.error;
+        toast.error(messague||"error", {
           autoClose: 1000,
         });
       }
+      
     },
     closeSelectProduct() {
   
