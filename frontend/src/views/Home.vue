@@ -85,9 +85,9 @@
           <div class="col-lg-10">
           <h1 style="font-weight: bold; font-size: 2.2rem;">Sistema pos sena</h1>
       
-          <p class="mt-5">
+          <h1 class="mt-5">
             Un sistema de punto de venta (POS) es una herramienta esencial en entornos comerciales, permitiendo realizar transacciones de ventas de manera eficiente. Compuesto por hardware y software, un POS facilita el proceso de compra al integrar funciones como escaneo de productos, gestión de inventario, y procesamiento de pagos.
-          </p>
+          </h1>
         </div>
         </div>
         <div class="col-lg-6 text-center">

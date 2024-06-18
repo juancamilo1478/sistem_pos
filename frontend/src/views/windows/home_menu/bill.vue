@@ -374,6 +374,7 @@ export default {
     async paybill(){
       const response = await axios.get("bills/pay/" + this.$route.params.id);
       console.log(response.data)
+      this.$router.push({path:"/menu"})
     },
     async loadbill(){
       const response = await axios.get("bills/billId/" + this.$route.params.id);
